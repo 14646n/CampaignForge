@@ -1,15 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import BattleMap from '../views/BattleMap.vue';
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    { path: '/', component: HomeView },
-    { 
-      path: '/campaigns', 
-      component: () => import('../views/CampaignView.vue') 
-    },
-  ],
-})
+const routes = [
+  { path: '/map/:id', component: BattleMap },
+  { path: '/', redirect: '/map/1' } // Редирект на первую сессию для теста
+];
 
-export default router
+export default createRouter({ history: createWebHistory(), routes });

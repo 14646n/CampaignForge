@@ -1,3 +1,6 @@
 from django.urls import re_path
-# Placeholder for WebSocket routes
-websocket_urlpatterns = []
+from apps.realtime.consumers import CampaignConsumer
+
+websocket_urlpatterns = [
+    re_path(r'ws/session/(?P<session_id>\w+)/$', CampaignConsumer.as_asgi()),
+]
