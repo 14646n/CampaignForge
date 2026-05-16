@@ -8,18 +8,6 @@
 - Node.js 18+
 - PostgreSQL 14+
 - Redis 6+
-- Ollama (для AI-функций)
-
-### Установка Ollama
-
-**Linux/macOS:**
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-ollama run llama2
-```
-
-**Windows:**
-Скачайте с https://ollama.com/download/windows
 
 ## Установка и запуск (без Docker)
 
@@ -101,13 +89,7 @@ npm install
 
 ```bash
 cd backend
-# Linux/macOS:
-source venv/bin/activate
-# Windows (Git Bash):
-source ../venv/Scripts/activate
-# Windows (CMD/PowerShell):
-venv\Scripts\activate
-
+source venv/bin/activate  # или venv\Scripts\activate на Windows
 python manage.py runserver
 ```
 
@@ -122,17 +104,11 @@ npm run dev
 
 Сервер запустится на `http://localhost:5173`
 
-#### Терминал 3 - Celery Worker (для AI-задач)
+#### Терминал 3 - Celery Worker (опционально, для фоновых задач)
 
 ```bash
 cd backend
-# Linux/macOS:
-source venv/bin/activate
-# Windows (Git Bash):
-source ../venv/Scripts/activate
-# Windows (CMD/PowerShell):
-venv\Scripts\activate
-
+source venv/bin/activate  # или venv\Scripts\activate на Windows
 celery -A config worker --loglevel=info
 ```
 
@@ -146,28 +122,10 @@ celery -A config worker --loglevel=info
 
 1. **Войдите в админку** (`http://localhost:8000/admin`)
 2. **Создайте компанию** в разделе Campaigns → Companies
-3. **Создайте сессию** в разделе Campaigns → Sessions  
-4. **Добавьте персонажей** через админку или API
-5. **Откройте карту** по адресу `http://localhost:5173/map/{session_id}`
-6. **Используйте чат с AI** для генерации NPC, встреч и описаний
+3. **Создайте сессию** в разделе Campaigns → Sessions
+4. **Вернитесь на фронтенд** (`http://localhost:5173`) и начните работу
 
-## Быстрый старт (Windows + Git Bash)
-
-```bash
-# Терминал 1 - Backend
-cd /d/dnd/CampaignForge/backend
-source ../venv/Scripts/activate
-python manage.py runserver
-
-# Терминал 2 - Frontend  
-cd /d/dnd/CampaignForge/frontend
-npm run dev
-
-# Терминал 3 - Celery
-cd /d/dnd/CampaignForge/backend
-source ../venv/Scripts/activate
-celery -A config worker --loglevel=info
-```
+## Конфигурация
 
 Основной файл конфигурации: `.env` в корне проекта
 
@@ -221,27 +179,3 @@ npm run build
 ## Лицензия
 
 MIT
-## Что нового в этой версии
-
-### UI Компоненты
-- **ChatInterface.vue** - компонент чата с AI Dungeon Master
-  - Отправка сообщений через WebSocket
-  - Быстрые действия для создания NPC, встреч, локаций и лута
-  - Индикатор набора текста AI
-  - История сообщений с временными метками
-
-### BattleMap улучшения
-- Интегрированный чат рядом с картой
-- Модальное окно для отображения результатов AI
-- Адаптивный дизайн с боковой панелью
-
-### Store улучшения
-- Конвертирован `campaign.js` в `campaign.ts` с полной типизацией
-- Добавлены интерфейсы: Character, Session, AIMessage
-- Методы для работы с AI сообщениями
-
-### Роутер
-- Добавлен роут для `/campaigns`
-- Добавлен роут для `/campaign/:id`
-- Убран жесткий редирект на сессию ID=1
-- Главная страница теперь ведет на HomeView
