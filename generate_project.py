@@ -438,8 +438,12 @@ def generate_ai_content(self, session_id: int, prompt: str, content_type: str):
         else:
             # OLLAMA FALLBACK LOGIC
             print(f"Using Ollama at {ollama_url} for generation...")
-            ollama_prompt = f"""You are a D&D 5e assistant. Output ONLY valid JSON matching this schema: {target_schema.model_json_schema()}.
-            Request: {prompt}"""
+            schema_str = json.dumps(target_schema.model_json_schema()) # Превращаем схему в строку JSON
+            ollama_prompt = (
+                "You are a D&D 5e assistant. Output ONLY valid JSON matching this schema: " 
+                + schema_str + 
+                ". Request: " + prompt
+            )
             
             payload = {
                 "model": "llama3", 
