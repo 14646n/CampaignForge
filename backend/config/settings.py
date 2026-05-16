@@ -61,12 +61,15 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
+        'HOST': 'localhost',
         'PORT': os.getenv('DB_PORT'),
     }
 }
 
-REDIS_URL = os.getenv('REDIS_URL', 'redis://redis:6379/0')
+IN_DOCKER = os.getenv('IN_DOCKER', 'False') == 'True'
+REDIS_HOST = 'redis' if IN_DOCKER else 'localhost'
+REDIS_URL = os.getenv('REDIS_URL', f'redis://{REDIS_HOST}:6379/0')
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -76,8 +79,6 @@ CACHES = {
 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
 
 CHANNEL_LAYERS = {
     "default": {
