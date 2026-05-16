@@ -15,7 +15,7 @@ class Session(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='sessions')
     title = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
-    # Хранит JSON с состоянием карты (токены, стены, туман войны)
+    created_at = models.DateTimeField(auto_now_add=True)
     map_state = models.JSONField(default=dict, blank=True) 
 
     def __str__(self):
@@ -25,11 +25,11 @@ class Character(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name='characters')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
-    data = models.JSONField(default=dict) # Stats, inventory
+    data = models.JSONField(default=dict)
     position_x = models.FloatField(default=0.0)
     position_y = models.FloatField(default=0.0)
     is_npc = models.BooleanField(default=False)
-    image_color = models.CharField(max_length=7, default='#3b82f6') # Hex color for token
+    image_color = models.CharField(max_length=7, default='#3b82f6')
 
     def __str__(self):
         return self.name

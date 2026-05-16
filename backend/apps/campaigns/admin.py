@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Campaign, Session, Character, AIMessage, MapSnapshot
+# Убрали MapSnapshot из импорта
+from .models import Campaign, Session, Character, AIMessage
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
@@ -23,8 +24,4 @@ class CharacterAdmin(admin.ModelAdmin):
 class AIMessageAdmin(admin.ModelAdmin):
     list_display = ('session', 'status', 'created_at')
     list_filter = ('status', 'session')
-    readonly_fields = ('prompt', 'response_text', 'response_json', 'generated_image_url')
-
-@admin.register(MapSnapshot)
-class MapSnapshotAdmin(admin.ModelAdmin):
-    list_display = ('session', 'created_at')
+    readonly_fields = ('prompt', 'response_text', 'response_json')
