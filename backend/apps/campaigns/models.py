@@ -15,7 +15,7 @@ class Session(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='sessions')
     title = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # Обязательно!
     map_state = models.JSONField(default=dict, blank=True) 
 
     def __str__(self):
